@@ -1,13 +1,7 @@
-// 项目入口文件,编写最基础的代码(应用程序)
-const Koa = require("koa");
+// 这里是http服务
+const app = require("./app");
+const { APP_PORT } = require("./config/config.default");
 
-const app = new Koa();
-
-app.use((ctx, next) => {
-  ctx.body = "hello word";
-});
-
-app.listen(3000, () => {
-  console.log("server is running on http://localhost:3000");
-  // 加油
+app.listen(APP_PORT, () => {
+  console.log(`服务启动成功 --> http://localhost:${APP_PORT}`);
 });
