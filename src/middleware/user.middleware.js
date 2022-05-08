@@ -1,5 +1,5 @@
 const { getUserInfo } = require("../service/user.service");
-const { userAlreadyExited, userFormateError } = require("../constant/err.type");
+const { userAlreadyExited, userFormateError, userRegisterError } = require("../constant/err.type");
 // 验证用户名或者密码是否为空
 const userValidator = async (ctx, next) => {
   const { user_name, password } = ctx.request.body;
@@ -16,8 +16,20 @@ const userValidator = async (ctx, next) => {
 const verifyUser = async (ctx, next) => {
   const { user_name, password } = ctx.request.body;
   // 用户名是否存在性,判断!
-  if (await getUserInfo({ user_name })) {
-    ctx.app.emit("error", userAlreadyExited, ctx);
+  // if (await getUserInfo({ user_name })) {
+  //   ctx.app.emit("error", userAlreadyExited, ctx);
+  //   return;
+  // }
+
+  try {
+    const res = await getUserInfo({ user_name });
+    if (res) {
+      console.error("用户名已经存在", { user_name });
+      ctx.app.emit("error", userAlreadyExited, ctx);
+      return;
+    }
+  } catch (error) {
+    ctx.app.emit("error", userRegisterError, ctx);
     return;
   }
   await next();

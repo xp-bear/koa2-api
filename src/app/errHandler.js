@@ -7,9 +7,13 @@ module.exports = (err, ctx) => {
     case "10002":
       status = 409;
       break;
+    case "10003":
+      status = 501;
+      break;
     default:
       status = 500;
   }
   ctx.status = status;
   ctx.body = err;
+  console.log(err);
 };

@@ -4,8 +4,9 @@ class UserService {
   async createUser(user_name, password) {
     // todo 写入数据库
     // 插入数据
-    let res = await User.create({ user_name, password });
+    const res = await User.create({ user_name, password });
     // console.log(res);
+    // console.log(aaa); //主要用来做错误测试
     return res.dataValues;
   }
 
