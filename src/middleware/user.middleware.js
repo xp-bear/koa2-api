@@ -29,6 +29,7 @@ const verifyUser = async (ctx, next) => {
       return;
     }
   } catch (error) {
+    console.error("获取用户信息失败!");
     ctx.app.emit("error", userRegisterError, ctx);
     return;
   }
